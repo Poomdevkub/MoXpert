@@ -57,10 +57,12 @@ We would like to acknowledge the use of code snippets from various open-source l
 
 ## Citation
 ```
-@article{chen2025can,
-  title={Can multimodal large language models be guided to improve industrial anomaly detection?},
-  author={Chen, Zhiling and Chen, Hanning and Imani, Mohsen and Imani, Farhad},
-  journal={arXiv preprint arXiv:2501.15795},
-  year={2025}
+@article{chen2025multi,
+  title={A multi-expert framework for enhancing multimodal large language models in industrial anomaly detection},
+  author={Chen, Zhiling and Imani, Farhad},
+  journal={Pattern Recognition},
+  pages={112752},
+  year={2025},
+  publisher={Elsevier}
 }
 ```
