@@ -1,0 +1,13 @@
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.40.0
+datasets>=2.19.0
+numpy
+scipy
+pandas
+matplotlib
+seaborn
+tqdm
+opencv-python
+Pillow
+scikit-learn
