@@ -11,3 +11,5 @@ tqdm
 opencv-python
 Pillow
 scikit-learn
+faiss-cpu
+clip
