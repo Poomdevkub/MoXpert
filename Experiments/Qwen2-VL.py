@@ -85,7 +85,7 @@ def evaluate_model():
     model = Qwen2VLForConditionalGeneration.from_pretrained(
         CONFIG["qwen_path"],
         torch_dtype=torch.bfloat16,
-        attn_implementation="flash_attention_2",
+        attn_implementation="sdpa",
         trust_remote_code=True,
     ).to(CONFIG["device"])
     processor = AutoProcessor.from_pretrained(CONFIG["qwen_path"], trust_remote_code=True, use_fast=False)
