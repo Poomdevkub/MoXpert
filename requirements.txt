@@ -13,3 +13,4 @@ Pillow
 scikit-learn
 faiss-cpu
 clip
+qwen-vl-utils

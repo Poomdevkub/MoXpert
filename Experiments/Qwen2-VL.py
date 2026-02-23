@@ -24,7 +24,7 @@ CONFIG = {
     "seed": 123,
     "device": "cuda",
     "clip_model": "ViT-B/16",
-    "qwen_path": "Qwen/Qwen2-VL-7B-Instruct",
+    "qwen_path": "Qwen/Qwen2-VL-2B-Instruct",
     "reference_index": r"../Memory/memory.index",
     "reference_images": r"../Memory/reference_image_locations.txt",
     "annotation_file": r"../Annotation/DS-MVTec.json",
