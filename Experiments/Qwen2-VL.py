@@ -24,11 +24,11 @@ CONFIG = {
     "seed": 123,
     "device": "cuda",
     "clip_model": "ViT-B/16",
-    "qwen_path": "Qwen/Qwen2-VL-2B-Instruct",
-    "reference_index": r"../Memory/memory.index",
-    "reference_images": r"../Memory/reference_image_locations.txt",
-    "annotation_file": r"../Annotation/DS-MVTec.json",
-    "domain_knowledge": r"../Knowledge Guide/domain_knowledge_detection.json",
+    "qwen_path": "Qwen/Qwen2-VL-2B-Instruct", 
+    "reference_index": r"D:\AI_Projects\MoXpert\Memory\memory.index",
+    "reference_images": r"D:\AI_Projects\MoXpert\Memory\reference_image_locations.txt",
+    "annotation_file": r"D:\AI_Projects\MoXpert\Annotation\DS-MVTec.json",
+    "domain_knowledge": r"D:\AI_Projects\MoXpert\Knowledge Guide\domain_knowledge_detection.json",
     "results_csv": r"Results_Qwen2VL.csv"
 }
 
@@ -104,12 +104,12 @@ def evaluate_model():
         for idx, (img_path, item_value) in enumerate(data.items()):
             logging.info(f"Processing item {idx + 1} of {len(data)}")
 
-            query_image_path = f"../Dataset/MMAD/{img_path}"
+            query_image_path = f"D:/AI_Projects/MoXpert/Dataset/MMAD/{img_path}"
             query_image_feature = get_image_feature(query_image_path, clip_model, preprocess)
 
             # Find most similar image
             D, I = index_img.search(np.expand_dims(query_image_feature, axis=0), k=1)
-            reference_image_path = image_paths[I[0][0]]
+            reference_image_path = image_paths[I[0][0]].replace("../Dataset", "D:/AI_Projects/MoXpert/Dataset")
 
             # Domain knowledge
             domain_knowledge = find_all_descriptions(CONFIG["domain_knowledge"], img_path)
