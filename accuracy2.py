@@ -96,5 +96,5 @@ print(report_text)
 with open("accuracy_report.txt", "w", encoding="utf-8") as f:
     f.write(report_text)
 
-print("\n✅ รายงานเปรียบเทียบโมเดลเสร็จสมบูรณ์! (เซฟลงไฟล์ accuracy_report2.txt เรียบร้อยแล้ว)") 
-print("👉 คุณสามารถเปิดไฟล์ accuracy_report2.txt")
+print("\n รายงานเปรียบเทียบโมเดลเสร็จสมบูรณ์! (เซฟลงไฟล์ accuracy_report2.txt เรียบร้อยแล้ว)") 
+print("สามารถเปิดไฟล์ accuracy_report2.txt")
