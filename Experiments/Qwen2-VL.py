@@ -123,7 +123,15 @@ def evaluate_model():
 
                 options_text = "\n".join([f"{k}: {v}" for k, v in options.items()])
 
-                messages = expert_generator(reference_image_path, query_image_path, question_type, question, options_text, domain_knowledge)
+                messages = expert_generator(
+                    reference_image_path,       # image1: รูปอ้างอิง
+                    query_image_path,           # image2: รูปตัวอย่าง
+                    question_type,              # ประเภทคำถาม
+                    question,                   # คำถาม
+                    options_text,               # ตัวเลือก A/B/C/D
+                    domain_knowledge            # ความรู้เฉพาะด้าน
+                )
+               
 
                 text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
                 image_inputs, _ = process_vision_info(messages)

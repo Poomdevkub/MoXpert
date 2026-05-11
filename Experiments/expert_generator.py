@@ -1,3 +1,4 @@
+#ส่วนของ Moxpert
 def expert_generator(image1, image2, question_type, question, options_text, domain_knowledge):
 
     # options_description = ', '.join([option.split(': ')[1] for option in options_text.split('\n')])
