@@ -22,15 +22,22 @@ from transformers import Qwen2VLForConditionalGeneration
 # ==========================
 # Configurations
 # ==========================
+
+# config สำหรับการประเมินโมเดล Qwen2-VL บน dataset MVTec โดยสลับระหว่างการใช้ full dataset กับ subset สำหรับทดสอบความสมบูรณ์ของ pipeline
+# ค่าเดิมที่เหมือนกัน (seed, device, model path)
+# ตรวจสอบว่า CUDA ใช้งานได้
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
 BASE_CONFIG = {
     "seed": 123,
-    "device": "cuda",
+    "device": DEVICE,
     "clip_model": "ViT-B/16",
     "qwen_path": "Qwen/Qwen2-VL-2B-Instruct", 
     "domain_knowledge": r"D:\AI_Projects\MoXpert\Knowledge Guide\domain_knowledge_detection.json",
 }
 
 # Configurations สำหรับ full dataset
+# ใช้ full annotation + full index 
 FULL_DATASET_CONFIG = {
     "reference_index": r"D:\AI_Projects\MoXpert\Memory\memory.index",
     "reference_images": r"D:\AI_Projects\MoXpert\Memory\reference_image_locations.txt",
@@ -39,18 +46,20 @@ FULL_DATASET_CONFIG = {
 }
 
 # Configurations สำหรับ subset (ทดสอบ)
+# ใช้ small annotation + FULL reference list (เพราะ FAISS index มี 729 รูป)
 SUBSET_CONFIG = {
     "reference_index": r"D:\AI_Projects\MoXpert\Memory\memory.index",
-    "reference_images": r"D:\AI_Projects\MoXpert\Memory\reference_image_locations_small.txt",
+    "reference_images": r"D:\AI_Projects\MoXpert\Memory\reference_image_locations.txt",
     "annotation_file": r"D:\AI_Projects\MoXpert\Annotation\DS-MVTec-small.json",
     "results_csv": r"Results_Qwen2VL_subset.csv"
 }
 
 CONFIG = None  # จะกำหนดค่าตามอาร์กิวเมนต์
+# จะกำหนดตอนรัน
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-
+#ทำงาน: เลือก config ตามสถานะ use_subset แล้ว merge กับ BASE_CONFIG
 def get_config(use_subset=False):
     """สร้าง CONFIG ตามว่าใช้ subset หรือ full dataset"""
     config = BASE_CONFIG.copy()
@@ -67,7 +76,7 @@ def set_seed(seed=123):
     random.seed(seed)
     np.random.seed(seed)
 
-def get_image_feature(image_path, clip_model, preprocess, device="cuda"):
+def get_image_feature(image_path, clip_model, preprocess, device="cpu"):
     image = preprocess(Image.open(image_path)).unsqueeze(0).to(device)
     with torch.no_grad():
         image_features = clip_model.encode_image(image)
@@ -150,7 +159,7 @@ def evaluate_model(use_subset=False, limit_samples=None):
             logging.info(f"Processing item {idx + 1} of {len(data)}")
 
             query_image_path = f"D:/AI_Projects/MoXpert/Dataset/MMAD/{img_path}"
-            query_image_feature = get_image_feature(query_image_path, clip_model, preprocess)
+            query_image_feature = get_image_feature(query_image_path, clip_model, preprocess, device=CONFIG["device"])
 
             # Find most similar image
             D, I = index_img.search(np.expand_dims(query_image_feature, axis=0), k=1)
@@ -212,7 +221,10 @@ def evaluate_model(use_subset=False, limit_samples=None):
 
 
 if __name__ == "__main__":
+    # สร้าง argument parser เพื่อเลือกระหว่างใช้ subset หรือ full dataset และจำกัดจำนวนตัวอย่างสำหรับการทดสอบแบบรวดเร็ว
     parser = argparse.ArgumentParser(description="ประเมินโมเดล Qwen2-VL บน dataset MVTec")
+
+    # Arguments
     parser.add_argument(
         "--subset",
         action="store_true",
@@ -227,6 +239,7 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
+    # แสดง info ว่าใช้ config ไหน
     if args.subset:
         print("\n" + "="*60)
         print("🧪 TESTING MODE: Using SUBSET dataset")
@@ -245,4 +258,5 @@ if __name__ == "__main__":
     if args.limit:
         print(f"\n⚠️  LIMITED TO {args.limit} SAMPLES\n")
     
+     # เรียกใช้ฟังก์ชัน
     evaluate_model(use_subset=args.subset, limit_samples=args.limit)

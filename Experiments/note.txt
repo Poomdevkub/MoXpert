@@ -1,0 +1,26 @@
+# 1. Full dataset (ค่าเดิม)
+python Qwen2-VL.py
+
+# 2. Subset mode  รัน 2 รูป
+python Qwen2-VL.py --subset
+python .\Qwen2-VL.py --subset --limit 2
+
+# 3. ทดสอบแค่ 5 รูป
+python Qwen2-VL.py --limit 5
+
+# 4. Subset + จำกัด 10 รูป
+python Qwen2-VL.py --subset --limit 10
+
+
+python                    ← รัน Python interpreter
+.\Qwen2-VL.py            ← ไฟล์ script ที่จะรัน (. = folder ปัจจุบัน)
+  --subset               ← ใช้ SUBSET mode (ไฟล์เล็ก ๆ สำหรับทดสอบ)
+  --limit 1              ← ประมวลผล เฉพาะ 1 รูป (แทนที่จะทั้งหมด)
+
+
+#แสดง text ในไฟล์ .csv
+type Results_Qwen2VL_subset.csv
+
+Annotation คืออะไร?
+Annotation คือข้อมูล "เฉลย" ที่มนุษย์สร้างขึ้นเพื่อบอกว่าแต่ละรูปมีคำตอบที่ถูกต้องคืออะไร ใช้สำหรับ ประเมินโมเดล — โค้ดจะถามโมเดลด้วยคำถามจาก annotation แล้วเปรียบเทียบคำตอบของโมเดลกับ "Answer" ที่เราระบุไว้
+annotation JSON  →  โค้ดส่งคำถามให้โมเดล  →  เปรียบเทียบกับ Answer  →  คำนวณ Accuracy

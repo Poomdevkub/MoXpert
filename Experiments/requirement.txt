@@ -1,0 +1,1 @@
+python -m pip install -q torch torchvision transformers datasets numpy scipy pandas matplotlib seaborn tqdm opencv-python Pillow scikit-learn faiss-cpu openai-clip qwen-vl-utils
