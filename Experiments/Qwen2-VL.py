@@ -3,7 +3,9 @@ import json
 import csv
 import random
 import logging
+import argparse
 from collections import defaultdict
+from pathlib import Path
 
 import torch
 import faiss
@@ -20,20 +22,45 @@ from transformers import Qwen2VLForConditionalGeneration
 # ==========================
 # Configurations
 # ==========================
-CONFIG = {
+BASE_CONFIG = {
     "seed": 123,
     "device": "cuda",
     "clip_model": "ViT-B/16",
     "qwen_path": "Qwen/Qwen2-VL-2B-Instruct", 
+    "domain_knowledge": r"D:\AI_Projects\MoXpert\Knowledge Guide\domain_knowledge_detection.json",
+}
+
+# Configurations สำหรับ full dataset
+FULL_DATASET_CONFIG = {
     "reference_index": r"D:\AI_Projects\MoXpert\Memory\memory.index",
     "reference_images": r"D:\AI_Projects\MoXpert\Memory\reference_image_locations.txt",
     "annotation_file": r"D:\AI_Projects\MoXpert\Annotation\DS-MVTec.json",
-    "domain_knowledge": r"D:\AI_Projects\MoXpert\Knowledge Guide\domain_knowledge_detection.json",
-    "results_csv": r"Results_Qwen2VL.csv"
+    "results_csv": r"Results_Qwen2VL_full.csv"
 }
+
+# Configurations สำหรับ subset (ทดสอบ)
+SUBSET_CONFIG = {
+    "reference_index": r"D:\AI_Projects\MoXpert\Memory\memory.index",
+    "reference_images": r"D:\AI_Projects\MoXpert\Memory\reference_image_locations_small.txt",
+    "annotation_file": r"D:\AI_Projects\MoXpert\Annotation\DS-MVTec-small.json",
+    "results_csv": r"Results_Qwen2VL_subset.csv"
+}
+
+CONFIG = None  # จะกำหนดค่าตามอาร์กิวเมนต์
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
+def get_config(use_subset=False):
+    """สร้าง CONFIG ตามว่าใช้ subset หรือ full dataset"""
+    config = BASE_CONFIG.copy()
+    if use_subset:
+        config.update(SUBSET_CONFIG)
+        logging.info("🧪 ใช้ SUBSET mode (ทดสอบ)")
+    else:
+        config.update(FULL_DATASET_CONFIG)
+        logging.info("📊 ใช้ FULL DATASET mode")
+    return config
 
 def set_seed(seed=123):
     torch.manual_seed(seed)
@@ -71,7 +98,17 @@ def load_reference_images(file_path):
         lines = file.readlines()
     return [line.strip() for line in lines]
 
-def evaluate_model():
+def evaluate_model(use_subset=False, limit_samples=None):
+    """
+    ประเมินโมเดล
+    
+    Args:
+        use_subset: ใช้ subset mode สำหรับทดสอบ
+        limit_samples: จำนวนสูงสุดของรูปที่จะประเมิน (ไม่มีค่า = ทั้งหมด)
+    """
+    global CONFIG
+    CONFIG = get_config(use_subset=use_subset)
+    
     set_seed(CONFIG["seed"])
 
     # Load CLIP
@@ -93,8 +130,16 @@ def evaluate_model():
     # Load dataset
     with open(CONFIG["annotation_file"], 'r') as f:
         data = json.load(f)
+    
+    # Limit samples ถ้าได้รับค่ามา
+    if limit_samples and limit_samples > 0:
+        data = dict(list(data.items())[:limit_samples])
+        logging.info(f"⚠️  จำกัดการประเมินไว้ที่ {limit_samples} รูป")
 
     metrics = defaultdict(lambda: {'y_true': [], 'y_pred': []})
+    total_items = len(data)
+    
+    logging.info(f"🔄 เริ่มประเมินจำนวนรูป: {total_items}")
 
     with open(CONFIG["results_csv"], 'w', newline='') as csvfile:
         fieldnames = ['Image Path', 'Question', 'Predicted Answer', 'Correct Answer']
@@ -119,24 +164,27 @@ def evaluate_model():
                 question = conversation['Question']
                 correct_answer = conversation['Answer']
                 options = conversation['Options']
-                question_type = conversation['type']
+                question_type = conversation['type']  # เช่น "Defect Classification"
 
                 options_text = "\n".join([f"{k}: {v}" for k, v in options.items()])
 
+                # เรียก expert_generator เพื่อสร้าง prompt
                 messages = expert_generator(
                     reference_image_path,       # image1: รูปอ้างอิง
                     query_image_path,           # image2: รูปตัวอย่าง
-                    question_type,              # ประเภทคำถาม
+                    question_type,              # ประเภทคำถาม            # ← นี่ตัดสินว่าจะใช้ prompt แบบไหน
                     question,                   # คำถาม
                     options_text,               # ตัวเลือก A/B/C/D
                     domain_knowledge            # ความรู้เฉพาะด้าน
                 )
                
-
+                # ข้อมูลที่ได้จาก expert_generator จะมีรูปภาพ 2 ภาพ + Prompt
+                # Prompt จะแตกต่างกันตามประเภทคำถาม
                 text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
                 image_inputs, _ = process_vision_info(messages)
                 inputs = processor(text=[text], images=image_inputs, return_tensors="pt").to(CONFIG["device"])
 
+                # ส่งให้โมเดลทำการทำนายคำตอบ
                 response_ids = model.generate(**inputs, max_length=5000)
                 response_ids_trimmed = [out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, response_ids)]
                 response = processor.batch_decode(response_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)
@@ -164,4 +212,37 @@ def evaluate_model():
 
 
 if __name__ == "__main__":
-    evaluate_model()
+    parser = argparse.ArgumentParser(description="ประเมินโมเดล Qwen2-VL บน dataset MVTec")
+    parser.add_argument(
+        "--subset",
+        action="store_true",
+        help="ใช้ subset dataset สำหรับทดสอบความสมบูรณ์"
+    )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="จำนวนสูงสุดของรูปที่ต้องการประเมิน (สำหรับทดสอบแบบรวดเร็ว)"
+    )
+    
+    args = parser.parse_args()
+    
+    if args.subset:
+        print("\n" + "="*60)
+        print("🧪 TESTING MODE: Using SUBSET dataset")
+        print("="*60)
+        print("📁 Annotation:", SUBSET_CONFIG["annotation_file"])
+        print("📁 Reference Images:", SUBSET_CONFIG["reference_images"])
+        print("="*60 + "\n")
+    else:
+        print("\n" + "="*60)
+        print("📊 FULL MODE: Using FULL dataset")
+        print("="*60)
+        print("📁 Annotation:", FULL_DATASET_CONFIG["annotation_file"])
+        print("📁 Reference Images:", FULL_DATASET_CONFIG["reference_images"])
+        print("="*60 + "\n")
+    
+    if args.limit:
+        print(f"\n⚠️  LIMITED TO {args.limit} SAMPLES\n")
+    
+    evaluate_model(use_subset=args.subset, limit_samples=args.limit)

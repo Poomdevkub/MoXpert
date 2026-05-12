@@ -1,0 +1,122 @@
+{
+    "DS-MVTec/bottle/image/broken_large/000.png": {
+        "image_path": "image/broken_large/000.png",
+        "conversation": [
+            {
+                "Question": "Is there any defect in the object?",
+                "Answer": "A",
+                "Options": {
+                    "A": "Yes.",
+                    "B": "No."
+                },
+                "type": "Anomaly Detection",
+                "annotation": true
+            },
+            {
+                "Question": "There is a defect in the object. What is the type of the defect?",
+                "Answer": "C",
+                "Options": {
+                    "A": "Foggy appearance.",
+                    "B": "Color fading.",
+                    "C": "Broken large.",
+                    "D": "Scratched surface."
+                },
+                "type": "Defect Classification",
+                "annotation": true
+            },
+            {
+                "Question": "There is a defect in the object. Where is the defect?",
+                "Answer": "D",
+                "Options": {
+                    "A": "Top right.",
+                    "B": "Top left.",
+                    "C": "Center.",
+                    "D": "Bottom right."
+                },
+                "type": "Defect Localization",
+                "annotation": true
+            },
+            {
+                "Question": "There is a defect in the object. What is the appearance of the defect?",
+                "Answer": "A",
+                "Options": {
+                    "A": "A jagged irregular break.",
+                    "B": "A smooth crack.",
+                    "C": "A round hole.",
+                    "D": "A small chip."
+                },
+                "type": "Defect Description",
+                "annotation": true
+            },
+            {
+                "Question": "There is a defect in the object. What is the effect of the defect?",
+                "Answer": "B",
+                "Options": {
+                    "A": "It enhances the bottle's aesthetics.",
+                    "B": "It presents a safety hazard.",
+                    "C": "It changes the color of the glass.",
+                    "D": "It has no effect on the bottle's function."
+                },
+                "type": "Defect Analysis",
+                "annotation": true
+            }
+        ],
+        "mask_path": "rbg_mask/broken_large/000_rbg_mask.png",
+        "similar_templates": [
+            "MVTec-AD/bottle/train/good/001.png",
+            "MVTec-AD/bottle/train/good/061.png"
+        ],
+        "random_templates": [
+            "MVTec-AD/bottle/train/good/004.png",
+            "MVTec-AD/bottle/train/good/032.png"
+        ]
+    },
+    "DS-MVTec/bottle/image/broken_large/001.png": {
+        "image_path": "image/broken_large/001.png",
+        "conversation": [
+            {
+                "Question": "Is there any defect in the object?",
+                "Answer": "A",
+                "Options": {
+                    "A": "Yes.",
+                    "B": "No."
+                },
+                "type": "Anomaly Detection",
+                "annotation": true
+            },
+            {
+                "Question": "There is a defect in the object. What is the type of the defect?",
+                "Answer": "D",
+                "Options": {
+                    "A": "Smudge.",
+                    "B": "Discoloration.",
+                    "C": "Scratch.",
+                    "D": "Break or chip."
+                },
+                "type": "Defect Classification",
+                "annotation": true
+            },
+            {
+                "Question": "There is a defect in the object. What is the appearance of the defect?",
+                "Answer": "C",
+                "Options": {
+                    "A": "An indentation.",
+                    "B": "A series of small dots.",
+                    "C": "A significant irregularity interrupting the circular edge.",
+                    "D": "A crack extending down the side."
+                },
+                "type": "Defect Description",
+                "annotation": true
+            }
+        ],
+        "mask_path": "rbg_mask/broken_large/001_rbg_mask.png",
+        "similar_templates": [
+            "MVTec-AD/bottle/train/good/106.png",
+            "MVTec-AD/bottle/train/good/114.png"
+        ],
+        "random_templates": [
+            "MVTec-AD/bottle/train/good/026.png",
+            "MVTec-AD/bottle/train/good/031.png"
+        ]
+    }
+}
