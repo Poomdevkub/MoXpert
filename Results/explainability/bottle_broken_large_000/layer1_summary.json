@@ -1,0 +1,86 @@
+{
+  "knowledge_guide": {
+    "gate": 0.26760929822921753,
+    "status": "CLOSED",
+    "top_groups": [
+      {
+        "group_id": 15,
+        "shap_value": -0.0013214166398224216,
+        "effect": "push_close"
+      },
+      {
+        "group_id": 10,
+        "shap_value": -0.000534036419006537,
+        "effect": "push_close"
+      },
+      {
+        "group_id": 27,
+        "shap_value": 0.0004488005161863364,
+        "effect": "push_open"
+      }
+    ]
+  },
+  "memory": {
+    "gate": 0.29659292101860046,
+    "status": "CLOSED",
+    "top_groups": [
+      {
+        "group_id": 15,
+        "shap_value": -0.0011425805587253089,
+        "effect": "push_close"
+      },
+      {
+        "group_id": 27,
+        "shap_value": 0.0004701454621412983,
+        "effect": "push_open"
+      },
+      {
+        "group_id": 10,
+        "shap_value": -0.00045893499734537727,
+        "effect": "push_close"
+      }
+    ]
+  },
+  "reasoning": {
+    "gate": 0.21188314259052277,
+    "status": "CLOSED",
+    "top_groups": [
+      {
+        "group_id": 15,
+        "shap_value": -0.001662817454361475,
+        "effect": "push_close"
+      },
+      {
+        "group_id": 10,
+        "shap_value": -0.0006708043937956921,
+        "effect": "push_close"
+      },
+      {
+        "group_id": 27,
+        "shap_value": 0.0006468849373428266,
+        "effect": "push_open"
+      }
+    ]
+  },
+  "vision": {
+    "gate": 0.2615217864513397,
+    "status": "CLOSED",
+    "top_groups": [
+      {
+        "group_id": 15,
+        "shap_value": -0.0016773292351334337,
+        "effect": "push_close"
+      },
+      {
+        "group_id": 27,
+        "shap_value": 0.0004180534834199291,
+        "effect": "push_open"
+      },
+      {
+        "group_id": 4,
+        "shap_value": 0.0004093198041406472,
+        "effect": "push_open"
+      }
+    ]
+  }
+}

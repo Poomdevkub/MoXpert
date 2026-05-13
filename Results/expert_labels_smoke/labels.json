@@ -1,0 +1,142 @@
+{
+  "metadata": {
+    "experts": [
+      "knowledge_guide",
+      "memory",
+      "reasoning",
+      "vision"
+    ],
+    "n_samples": 5,
+    "n_skipped": 0,
+    "annotation": "D:\\AI_Projects\\MoXpert\\Annotation\\DS-MVTec.json",
+    "question_filter": "Anomaly Detection",
+    "qwen_path": "Qwen/Qwen2-VL-2B-Instruct"
+  },
+  "samples": [
+    {
+      "image_path": "DS-MVTec/bottle/image/broken_large/000.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\bottle\\train\\good\\125.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        }
+      ],
+      "expert_targets": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 0
+    },
+    {
+      "image_path": "DS-MVTec/bottle/image/broken_large/001.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\bottle\\train\\good\\125.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        }
+      ],
+      "expert_targets": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 1
+    },
+    {
+      "image_path": "DS-MVTec/bottle/image/broken_large/002.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\bottle\\train\\good\\125.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        }
+      ],
+      "expert_targets": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 2
+    },
+    {
+      "image_path": "DS-MVTec/bottle/image/broken_large/003.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\bottle\\train\\good\\015.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        }
+      ],
+      "expert_targets": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 3
+    },
+    {
+      "image_path": "DS-MVTec/bottle/image/broken_large/004.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\bottle\\train\\good\\073.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        }
+      ],
+      "expert_targets": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 4
+    }
+  ]
+}

@@ -1,0 +1,1064 @@
+{
+  "metadata": {
+    "experts": [
+      "knowledge_guide",
+      "memory",
+      "reasoning",
+      "vision"
+    ],
+    "n_samples": 15,
+    "n_skipped": 0,
+    "annotation": "D:\\AI_Projects\\MoXpert\\Annotation\\DS-MVTec.json",
+    "question_filter": "ALL",
+    "qwen_path": "Qwen/Qwen2-VL-2B-Instruct"
+  },
+  "samples": [
+    {
+      "image_path": "DS-MVTec/grid/image/thread/001.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\grid\\train\\good\\051.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "D",
+            "minus_kg": "C",
+            "minus_mem": "D",
+            "minus_reason": "D",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. What effect does the defect have on the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        }
+      ],
+      "expert_targets": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 0
+    },
+    {
+      "image_path": "DS-MVTec/zipper/image/combined/010.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\zipper\\train\\good\\181.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. What is the potential effect of the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "D",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "B"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 1
+    },
+    {
+      "image_path": "DS-MVTec/grid/image/glue/009.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\grid\\train\\good\\163.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "B",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "D",
+          "preds": {
+            "base": "B",
+            "minus_kg": "D",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "D"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. What is the effect of the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "embedding_idx": 2
+    },
+    {
+      "image_path": "DS-MVTec/tile/image/good/020.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\tile\\train\\good\\114.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "B",
+          "preds": {
+            "base": "A",
+            "minus_kg": "B",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        }
+      ],
+      "expert_targets": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "embedding_idx": 3
+    },
+    {
+      "image_path": "DS-MVTec/tile/image/gray_stroke/014.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\tile\\train\\good\\112.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "D",
+            "minus_kg": "A",
+            "minus_mem": "D",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "C",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. How does the defect compare to the surrounding tile pattern?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 4
+    },
+    {
+      "image_path": "DS-MVTec/leather/image/color/017.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\leather\\train\\good\\075.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. How does the defect affect the appearance of the leather?",
+          "correct": "D",
+          "preds": {
+            "base": "D",
+            "minus_kg": "D",
+            "minus_mem": "D",
+            "minus_reason": "D",
+            "vision_only": "D"
+          }
+        }
+      ],
+      "expert_targets": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 5
+    },
+    {
+      "image_path": "DS-MVTec/bottle/image/broken_small/009.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\bottle\\train\\good\\137.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "D",
+          "preds": {
+            "base": "D",
+            "minus_kg": "D",
+            "minus_mem": "D",
+            "minus_reason": "D",
+            "vision_only": "D"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "A",
+            "minus_kg": "C",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "D",
+          "preds": {
+            "base": "D",
+            "minus_kg": "D",
+            "minus_mem": "D",
+            "minus_reason": "D",
+            "vision_only": "D"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. How does the defect affect the object?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        }
+      ],
+      "expert_targets": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 6
+    },
+    {
+      "image_path": "DS-MVTec/pill/image/color/010.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\pill\\train\\good\\067.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "B",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "D",
+          "preds": {
+            "base": "D",
+            "minus_kg": "D",
+            "minus_mem": "D",
+            "minus_reason": "D",
+            "vision_only": "D"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. What effect does the defect have on the pill's appearance?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 7
+    },
+    {
+      "image_path": "DS-MVTec/transistor/image/cut_lead/006.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\transistor\\train\\good\\071.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the transistor?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "B",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect located?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "C",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. Do the other parts of the transistor appear to be intact?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 8
+    },
+    {
+      "image_path": "DS-MVTec/bottle/image/broken_large/019.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\bottle\\train\\good\\125.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "D",
+          "preds": {
+            "base": "D",
+            "minus_kg": "D",
+            "minus_mem": "D",
+            "minus_reason": "D",
+            "vision_only": "D"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "C",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. How does the defect affect the bottle?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 9
+    },
+    {
+      "image_path": "DS-MVTec/hazelnut/image/cut/000.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\hazelnut\\train\\good\\326.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "C",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "C",
+            "minus_kg": "A",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. What is the effect of the defect on the nut’s appearance?",
+          "correct": "D",
+          "preds": {
+            "base": "D",
+            "minus_kg": "D",
+            "minus_mem": "D",
+            "minus_reason": "D",
+            "vision_only": "D"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 10
+    },
+    {
+      "image_path": "DS-MVTec/cable/image/cut_outer_insulation/008.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\cable\\train\\good\\184.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "A",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "C",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "D",
+            "minus_kg": "D",
+            "minus_mem": "D",
+            "minus_reason": "D",
+            "vision_only": "D"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "C",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. What is the effect of the defect on the cable?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 11
+    },
+    {
+      "image_path": "DS-MVTec/screw/image/scratch_neck/012.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\screw\\train\\good\\116.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "A",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "D",
+          "preds": {
+            "base": "D",
+            "minus_kg": "B",
+            "minus_mem": "D",
+            "minus_reason": "D",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "B",
+            "minus_kg": "D",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "D",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "D"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. What is the effect of the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 12
+    },
+    {
+      "image_path": "DS-MVTec/capsule/image/faulty_imprint/008.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\capsule\\train\\good\\174.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "B",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "A",
+            "minus_kg": "C",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. What is the effect of the defect?",
+          "correct": "D",
+          "preds": {
+            "base": "D",
+            "minus_kg": "D",
+            "minus_mem": "D",
+            "minus_reason": "D",
+            "vision_only": "D"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "embedding_idx": 13
+    },
+    {
+      "image_path": "DS-MVTec/pill/image/faulty_imprint/014.png",
+      "reference_path": "D:/AI_Projects/MoXpert/Dataset/MMAD/MVTec-AD\\pill\\train\\good\\056.png",
+      "per_question": [
+        {
+          "question_type": "Anomaly Detection",
+          "question": "Is there any defect in the object?",
+          "correct": "A",
+          "preds": {
+            "base": "A",
+            "minus_kg": "B",
+            "minus_mem": "A",
+            "minus_reason": "A",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Classification",
+          "question": "There is a defect in the object. What is the type of the defect?",
+          "correct": "B",
+          "preds": {
+            "base": "B",
+            "minus_kg": "B",
+            "minus_mem": "B",
+            "minus_reason": "B",
+            "vision_only": "B"
+          }
+        },
+        {
+          "question_type": "Defect Localization",
+          "question": "There is a defect in the object. Where is the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "B",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        },
+        {
+          "question_type": "Defect Description",
+          "question": "There is a defect in the object. What is the appearance of the defect?",
+          "correct": "A",
+          "preds": {
+            "base": "C",
+            "minus_kg": "D",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "A"
+          }
+        },
+        {
+          "question_type": "Defect Analysis",
+          "question": "There is a defect in the object. What is the effect of the defect?",
+          "correct": "C",
+          "preds": {
+            "base": "C",
+            "minus_kg": "C",
+            "minus_mem": "C",
+            "minus_reason": "C",
+            "vision_only": "C"
+          }
+        }
+      ],
+      "expert_targets": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "embedding_idx": 14
+    }
+  ]
+}
