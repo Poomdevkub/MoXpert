@@ -1,0 +1,86 @@
+{
+  "Reference Extractor": {
+    "gate": 0.9504674673080444,
+    "status": "OPEN",
+    "top_groups": [
+      {
+        "group_id": 4,
+        "shap_value": 0.016387227813010014,
+        "effect": "push_open"
+      },
+      {
+        "group_id": 25,
+        "shap_value": 0.01153781771092489,
+        "effect": "push_open"
+      },
+      {
+        "group_id": 20,
+        "shap_value": 0.008046206719739232,
+        "effect": "push_open"
+      }
+    ]
+  },
+  "Knowledge Guide": {
+    "gate": 0.9499735832214355,
+    "status": "OPEN",
+    "top_groups": [
+      {
+        "group_id": 2,
+        "shap_value": 0.02450725162038106,
+        "effect": "push_open"
+      },
+      {
+        "group_id": 6,
+        "shap_value": -0.015048234990095975,
+        "effect": "push_close"
+      },
+      {
+        "group_id": 27,
+        "shap_value": 0.00900501402653401,
+        "effect": "push_open"
+      }
+    ]
+  },
+  "Reasoning Expert": {
+    "gate": 0.9492848515510559,
+    "status": "OPEN",
+    "top_groups": [
+      {
+        "group_id": 4,
+        "shap_value": 0.015735228887534685,
+        "effect": "push_open"
+      },
+      {
+        "group_id": 20,
+        "shap_value": 0.00546379545146437,
+        "effect": "push_open"
+      },
+      {
+        "group_id": 12,
+        "shap_value": 0.004112527692629441,
+        "effect": "push_open"
+      }
+    ]
+  },
+  "Decision Maker": {
+    "gate": 0.9500422477722168,
+    "status": "OPEN",
+    "top_groups": [
+      {
+        "group_id": 2,
+        "shap_value": 0.008853757055471412,
+        "effect": "push_open"
+      },
+      {
+        "group_id": 23,
+        "shap_value": 0.006367377833953662,
+        "effect": "push_open"
+      },
+      {
+        "group_id": 20,
+        "shap_value": -0.0050195211356306516,
+        "effect": "push_close"
+      }
+    ]
+  }
+}
