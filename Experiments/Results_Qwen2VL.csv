@@ -1,1 +1,13 @@
 Image Path,Question,Predicted Answer,Correct Answer
+DS-MVTec/bottle/image/broken_large/000.png,Is there any defect in the object?,A,A
+DS-MVTec/bottle/image/broken_large/000.png,There is a defect in the object. What is the type of the defect?,C,C
+DS-MVTec/bottle/image/broken_large/000.png,There is a defect in the object. Where is the defect?,D,D
+DS-MVTec/bottle/image/broken_large/000.png,There is a defect in the object. What is the appearance of the defect?,A,A
+DS-MVTec/bottle/image/broken_large/000.png,There is a defect in the object. What is the effect of the defect?,B,B
+DS-MVTec/bottle/image/broken_large/001.png,Is there any defect in the object?,A,A
+DS-MVTec/bottle/image/broken_large/001.png,There is a defect in the object. What is the type of the defect?,D,D
+DS-MVTec/bottle/image/broken_large/001.png,There is a defect in the object. What is the appearance of the defect?,C,C
+DS-MVTec/bottle/image/broken_large/002.png,Is there any defect in the object?,B,B
+DS-MVTec/bottle/image/broken_large/002.png,There is a defect in the object. What is the type of the defect?,B,B
+DS-MVTec/bottle/image/broken_large/002.png,There is a defect in the object. Where is the defect?,D,D
+DS-MVTec/bottle/image/broken_large/002.png,There is a defect in the object. What is the appearance of the defect?,B,B

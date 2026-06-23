@@ -1,11 +1,16 @@
 import os
+os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
+
 import logging
-import faiss
 import torch
+import clip
+import faiss
 import numpy as np
 from PIL import Image
 from tqdm import tqdm
-import clip
+
+torch.set_num_threads(1)
+faiss.omp_set_num_threads(1)
 
 DATASETS = [
     r"../Dataset/MMAD/MVTec-AD",
@@ -13,7 +18,7 @@ DATASETS = [
 ]
 REFERENCE_FILE = r"reference_image_locations.txt"
 INDEX_SAVE_PATH = r"memory.index"
-DEVICE = "cuda"
+DEVICE = "mps" if torch.backends.mps.is_available() else ("cuda" if torch.cuda.is_available() else "cpu")
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -31,7 +36,7 @@ def build_data_location(base_dirs, output_file):
     logging.info(f"Image locations saved to {output_file}")
 
 
-def build_memory(reference_file, index_save_path, device="cuda"):
+def build_memory(reference_file, index_save_path, device=DEVICE):
     """Build FAISS memory index from reference images using CLIP embeddings."""
     # Load CLIP
     clip_model, preprocess = clip.load("ViT-B/16", device=device)

@@ -1,4 +1,6 @@
 import os
+os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
+
 import json
 import csv
 import random
@@ -6,29 +8,34 @@ import logging
 from collections import defaultdict
 
 import torch
+import clip
 import faiss
 import numpy as np
 from PIL import Image
 from tqdm import tqdm
 from sklearn.metrics import accuracy_score
-import clip
 from transformers import AutoProcessor
 from qwen_vl_utils import process_vision_info
 from expert_generator import expert_generator
 from transformers import Qwen2VLForConditionalGeneration
 
+faiss.omp_set_num_threads(1)
+
 # ==========================
 # Configurations
 # ==========================
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEVICE = "mps" if torch.backends.mps.is_available() else ("cuda" if torch.cuda.is_available() else "cpu")
+
 CONFIG = {
     "seed": 123,
-    "device": "cuda",
+    "device": DEVICE,
     "clip_model": "ViT-B/16",
-    "qwen_path": "Qwen/Qwen2-VL-2B-Instruct", 
-    "reference_index": r"D:\AI_Projects\MoXpert\Memory\memory.index",
-    "reference_images": r"D:\AI_Projects\MoXpert\Memory\reference_image_locations.txt",
-    "annotation_file": r"D:\AI_Projects\MoXpert\Annotation\DS-MVTec.json",
-    "domain_knowledge": r"D:\AI_Projects\MoXpert\Knowledge Guide\domain_knowledge_detection.json",
+    "qwen_path": "Qwen/Qwen2-VL-2B-Instruct",
+    "reference_index": os.path.join(BASE_DIR, "Memory", "memory.index"),
+    "reference_images": os.path.join(BASE_DIR, "Memory", "reference_image_locations.txt"),
+    "annotation_file": os.path.join(BASE_DIR, "Annotation", "DS-MVTec.json"),
+    "domain_knowledge": os.path.join(BASE_DIR, "Knowledge Guide", "domain_knowledge_detection.json"),
     "results_csv": r"Results_Qwen2VL.csv"
 }
 
@@ -40,7 +47,7 @@ def set_seed(seed=123):
     random.seed(seed)
     np.random.seed(seed)
 
-def get_image_feature(image_path, clip_model, preprocess, device="cuda"):
+def get_image_feature(image_path, clip_model, preprocess, device=DEVICE):
     image = preprocess(Image.open(image_path)).unsqueeze(0).to(device)
     with torch.no_grad():
         image_features = clip_model.encode_image(image)
@@ -93,6 +100,8 @@ def evaluate_model():
     # Load dataset
     with open(CONFIG["annotation_file"], 'r') as f:
         data = json.load(f)
+    if os.environ.get("MOXPERT_SMOKE_TEST"):
+        data = dict(list(data.items())[:3])
 
     metrics = defaultdict(lambda: {'y_true': [], 'y_pred': []})
 
@@ -104,12 +113,12 @@ def evaluate_model():
         for idx, (img_path, item_value) in enumerate(data.items()):
             logging.info(f"Processing item {idx + 1} of {len(data)}")
 
-            query_image_path = f"D:/AI_Projects/MoXpert/Dataset/MMAD/{img_path}"
+            query_image_path = os.path.join(BASE_DIR, "Dataset", "MMAD", img_path)
             query_image_feature = get_image_feature(query_image_path, clip_model, preprocess)
 
             # Find most similar image
             D, I = index_img.search(np.expand_dims(query_image_feature, axis=0), k=1)
-            reference_image_path = image_paths[I[0][0]].replace("../Dataset", "D:/AI_Projects/MoXpert/Dataset")
+            reference_image_path = image_paths[I[0][0]].replace("\\", "/").replace("../Dataset", os.path.join(BASE_DIR, "Dataset"))
 
             # Domain knowledge
             domain_knowledge = find_all_descriptions(CONFIG["domain_knowledge"], img_path)
