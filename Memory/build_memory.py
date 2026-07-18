@@ -1,7 +1,10 @@
 import os
+os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")  # avoid libomp conflict between torch/faiss/sklearn on macOS
+
 import logging
-import faiss
 import torch
+import faiss
+faiss.omp_set_num_threads(1)  # avoid segfault from concurrent OpenMP threads (torch/faiss libomp conflict on macOS)
 import numpy as np
 from PIL import Image
 from tqdm import tqdm
