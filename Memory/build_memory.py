@@ -13,7 +13,9 @@ DATASETS = [
 ]
 REFERENCE_FILE = r"reference_image_locations.txt"
 INDEX_SAVE_PATH = r"memory.index"
-DEVICE = "cuda"
+
+#for MacOS users with M1/M2 chips, otherwise use "cuda" or "cpu"
+DEVICE = "mps" if torch.backends.mps.is_available() else "cpu"  
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 

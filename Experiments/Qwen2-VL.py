@@ -22,7 +22,7 @@ from transformers import Qwen2VLForConditionalGeneration
 # ==========================
 CONFIG = {
     "seed": 123,
-    "device": "cuda",
+    "device": "mps" if torch.backends.mps.is_available() else "cpu",
     "clip_model": "ViT-B/16",
     "qwen_path": "Qwen/Qwen2-VL-7B-Instruct",
     "reference_index": r"../Memory/memory.index",
@@ -40,7 +40,7 @@ def set_seed(seed=123):
     random.seed(seed)
     np.random.seed(seed)
 
-def get_image_feature(image_path, clip_model, preprocess, device="cuda"):
+def get_image_feature(image_path, clip_model, preprocess, device):
     image = preprocess(Image.open(image_path)).unsqueeze(0).to(device)
     with torch.no_grad():
         image_features = clip_model.encode_image(image)
@@ -82,12 +82,23 @@ def evaluate_model():
     image_paths = load_reference_images(CONFIG["reference_images"])
 
     # Load Qwen model & processor
+
+    # model = Qwen2VLForConditionalGeneration.from_pretrained(
+    #     CONFIG["qwen_path"],
+    #     torch_dtype=torch.bfloat16,
+    #     attn_implementation="flash_attention_2",
+    #     trust_remote_code=True,
+    # ).to(CONFIG["device"])
+
+    device = CONFIG["device"]
+    dtype = torch.float16 if device == "mps" else torch.float32
     model = Qwen2VLForConditionalGeneration.from_pretrained(
         CONFIG["qwen_path"],
-        torch_dtype=torch.bfloat16,
-        attn_implementation="flash_attention_2",
+        torch_dtype=dtype,
+        attn_implementation="sdpa",
         trust_remote_code=True,
-    ).to(CONFIG["device"])
+    ).to(device)
+    model.eval()
     processor = AutoProcessor.from_pretrained(CONFIG["qwen_path"], trust_remote_code=True, use_fast=False)
 
     # Load dataset
@@ -105,7 +116,12 @@ def evaluate_model():
             logging.info(f"Processing item {idx + 1} of {len(data)}")
 
             query_image_path = f"../Dataset/MMAD/{img_path}"
-            query_image_feature = get_image_feature(query_image_path, clip_model, preprocess)
+            query_image_feature = get_image_feature(
+                query_image_path,
+                clip_model,
+                preprocess,
+                device=CONFIG["device"],
+            )
 
             # Find most similar image
             D, I = index_img.search(np.expand_dims(query_image_feature, axis=0), k=1)

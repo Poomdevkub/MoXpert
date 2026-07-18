@@ -31,6 +31,8 @@ conda activate MoXpert
 # Install dependencies
 pip install -r requirements.txt
 ```
+## Symbolic link dataset ##
+ln -s "../../Dataset/MMAD" "Dataset/MMAD"
 
 ## Build Memory Index ##
 

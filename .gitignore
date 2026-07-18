@@ -1,3 +1,6 @@
 DATASET.md
 DS_Store
+.DS_Store
 .claude
+__pycache__/
+Dataset/
