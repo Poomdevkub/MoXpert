@@ -1,10 +1,12 @@
 import os
 os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")  # avoid libomp conflict between torch/faiss/sklearn on macOS
 
+import platform
 import logging
 import torch
 import faiss
-faiss.omp_set_num_threads(1)  # avoid segfault from concurrent OpenMP threads (torch/faiss libomp conflict on macOS)
+if platform.system() == "Darwin":
+    faiss.omp_set_num_threads(1)  # avoid segfault from concurrent OpenMP threads (torch/faiss libomp conflict on macOS)
 import numpy as np
 from PIL import Image
 from tqdm import tqdm
@@ -17,8 +19,13 @@ DATASETS = [
 REFERENCE_FILE = r"reference_image_locations.txt"
 INDEX_SAVE_PATH = r"memory.index"
 
-#for MacOS users with M1/M2 chips, otherwise use "cuda" or "cpu"
-DEVICE = "mps" if torch.backends.mps.is_available() else "cpu"  
+# Auto-detect: NVIDIA GPU (cloud/RunPod) -> Apple Silicon MPS (macOS) -> CPU
+if torch.cuda.is_available():
+    DEVICE = "cuda"
+elif torch.backends.mps.is_available():
+    DEVICE = "mps"
+else:
+    DEVICE = "cpu"
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 

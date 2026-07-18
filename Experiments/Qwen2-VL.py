@@ -5,11 +5,13 @@ import json
 import csv
 import random
 import logging
+import platform
 from collections import defaultdict
 
 import torch
 import faiss
-faiss.omp_set_num_threads(1)  # avoid segfault from concurrent OpenMP threads (torch/faiss libomp conflict on macOS)
+if platform.system() == "Darwin":
+    faiss.omp_set_num_threads(1)  # avoid segfault from concurrent OpenMP threads (torch/faiss libomp conflict on macOS)
 import numpy as np
 from PIL import Image
 from tqdm import tqdm
@@ -23,9 +25,16 @@ from transformers import Qwen2VLForConditionalGeneration
 # ==========================
 # Configurations
 # ==========================
+if torch.cuda.is_available():
+    _DEVICE = "cuda"
+elif torch.backends.mps.is_available():
+    _DEVICE = "mps"
+else:
+    _DEVICE = "cpu"
+
 CONFIG = {
     "seed": 123,
-    "device": "mps" if torch.backends.mps.is_available() else "cpu",
+    "device": _DEVICE,
     "clip_model": "ViT-B/16",
     "qwen_path": "Qwen/Qwen2-VL-7B-Instruct",
     "reference_index": r"../Memory/memory.index",
@@ -85,20 +94,25 @@ def evaluate_model():
     image_paths = load_reference_images(CONFIG["reference_images"])
 
     # Load Qwen model & processor
-
-    # model = Qwen2VLForConditionalGeneration.from_pretrained(
-    #     CONFIG["qwen_path"],
-    #     torch_dtype=torch.bfloat16,
-    #     attn_implementation="flash_attention_2",
-    #     trust_remote_code=True,
-    # ).to(CONFIG["device"])
-
     device = CONFIG["device"]
-    dtype = torch.float16 if device == "mps" else torch.float32
+    if device == "cuda":
+        dtype = torch.bfloat16
+        try:
+            import flash_attn  # noqa: F401
+            attn_implementation = "flash_attention_2"
+        except ImportError:
+            attn_implementation = "sdpa"
+    elif device == "mps":
+        dtype = torch.float16
+        attn_implementation = "sdpa"
+    else:
+        dtype = torch.float32
+        attn_implementation = "sdpa"
+
     model = Qwen2VLForConditionalGeneration.from_pretrained(
         CONFIG["qwen_path"],
         torch_dtype=dtype,
-        attn_implementation="sdpa",
+        attn_implementation=attn_implementation,
         trust_remote_code=True,
     ).to(device)
     model.eval()
