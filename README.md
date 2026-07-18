@@ -19,6 +19,15 @@ We propose an multi-experts framework named MoXpert, which comprises four expert
 conda create -n MoXpert python=3.12 -y
 conda activate MoXpert
 
+  #ใช้ conda
+    #วิธีสร้าง
+    conda create -n moxpert python=3.12 -y
+    #วิธีเปิดใช้งาน
+    conda activate moxpert
+    python -m pip install --upgrade pip
+    #ไว้เช็คว่ามีconda อะไรบ้าง
+    conda env list
+
 # Install dependencies
 pip install -r requirements.txt
 ```
