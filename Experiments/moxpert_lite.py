@@ -58,25 +58,32 @@ def default_prior(question_type: str) -> List[str]:
     return HEURISTIC_PRIORS.get(question_type, DEFAULT_PRIOR)
 
 
-# --- Decision threshold τ_i รายตัว (แปลง p -> y) --------------------------
+# --- Decision threshold τ (แปลง p -> y) -----------------------------------
+# ตาม paper (Algorithm 1): ใช้ τ "ค่าเดียวร่วมกันทุก expert" เป็นเกณฑ์กลาง และเป็นค่าที่
+# ปรับหาไว้ล่วงหน้า (predefined) จาก validation set — นี่คือพฤติกรรม default ที่ใช้จริง
+# หมายเหตุ: การส่ง τ เป็นเวกเตอร์แยกราย expert เป็น "ส่วนขยายนอก paper" (เตรียมไว้สำหรับ
+# งาน SHAP ภายหลัง) ไม่ใช่พฤติกรรมมาตรฐานของ MoXpert
 def _as_tau_vector(tau) -> np.ndarray:
-    """รับ τ เป็น scalar หรือเวกเตอร์ยาว 4 แล้ว broadcast ให้เป็นเวกเตอร์ยาว N_EXPERTS"""
+    """รับ τ เป็น scalar (ตาม paper) หรือเวกเตอร์ยาว 4 (extension) -> เวกเตอร์ยาว N_EXPERTS"""
     if torch is not None and isinstance(tau, torch.Tensor):
         tau = tau.detach().cpu().numpy()
     tau = np.asarray(tau, dtype=np.float64)
     if tau.ndim == 0:
-        tau = np.full(N_EXPERTS, float(tau))
+        tau = np.full(N_EXPERTS, float(tau))   # scalar -> ใช้เกณฑ์เดียวกันทุก expert (paper)
     if tau.shape != (N_EXPERTS,):
         raise ValueError(f"tau ต้องเป็น scalar หรือ shape ({N_EXPERTS},) แต่ได้ {tau.shape}")
     return tau
 
 
 def apply_threshold(probs, tau=0.5) -> np.ndarray:
-    """แปลงความน่าจะเป็น p_i -> การตัดสินใจ y_i : y_i = 1 ถ้า p_i >= τ_i ไม่งั้น 0"""
+    """แปลงความน่าจะเป็น p_i -> การตัดสินใจ y_i : y_i = 1 ถ้า p_i > τ ไม่งั้น 0
+
+    ใช้ strictly greater (>) ตาม Algorithm 1 ของ paper
+    """
     if torch is not None and isinstance(probs, torch.Tensor):
         probs = probs.detach().cpu().numpy()
     probs = np.asarray(probs, dtype=np.float64)
-    return (probs >= _as_tau_vector(tau)).astype(int)
+    return (probs > _as_tau_vector(tau)).astype(int)
 
 
 def experts_from_vector(vec, tau=0.5) -> List[str]:

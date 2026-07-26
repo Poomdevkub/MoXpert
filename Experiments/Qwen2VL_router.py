@@ -304,6 +304,69 @@ def save_confusion_png(rows, mode: str, outdir) -> None:
         logging.info(f"เซฟรูป {out_png}")
 
 
+def save_accuracy_comparison_png(stats, modes, outdir) -> None:
+    """เซฟกราฟแท่งเทียบ accuracy: baseline เดิม (ส้ม) vs baseline+router (น้ำเงิน)
+
+    ใช้สไตล์เดียวกับ Analysis_Results_Mac.ipynb
+      - baseline เดิม        -> สีส้ม   #F58518
+      - baseline+router      -> สีน้ำเงิน #4C78A8
+    ต้องรันด้วย --mode both ถึงจะมีข้อมูลครบทั้งสองฝั่ง
+    """
+    if not ("baseline" in modes and "router" in modes):
+        logging.info("[png] ข้ามกราฟเทียบ accuracy (ต้องใช้ --mode both)")
+        return
+    try:
+        import matplotlib
+        matplotlib.use("Agg")               # headless (Mac / Colab)
+        import matplotlib.pyplot as plt
+    except Exception as e:
+        logging.warning(f"[png] ข้ามกราฟเทียบ (import matplotlib ไม่ได้: {e})")
+        return
+
+    # เรียง question_type ตามลำดับคงที่ แล้วต่อท้ายด้วย type อื่นที่โผล่มา
+    seen = set(stats["baseline"]) | set(stats["router"])
+    types = [t for t in QTYPE_ORDER if t in seen] + sorted(seen - set(QTYPE_ORDER))
+
+    def acc_pct(mode, t):
+        """accuracy เป็น % ของ (mode, question_type) ; ไม่มีข้อมูล -> NaN"""
+        c, n = stats[mode].get(t, [0, 0])
+        return (c / n * 100.0) if n else float("nan")
+
+    # ค่าแต่ละแท่ง + ค่าเฉลี่ยรวม (micro-average จากทุกคำถาม) ต่อท้าย
+    base_vals = [acc_pct("baseline", t) for t in types]
+    rout_vals = [acc_pct("router", t) for t in types]
+    for m, vals in (("baseline", base_vals), ("router", rout_vals)):
+        c = sum(v[0] for v in stats[m].values()); n = sum(v[1] for v in stats[m].values())
+        vals.append((c / n * 100.0) if n else float("nan"))
+    labels = types + ["OVERALL"]
+
+    x = np.arange(len(labels))
+    w = 0.38
+    fig, ax = plt.subplots(figsize=(11, 5))
+    # หมายเหตุ: ข้อความในรูปใช้อังกฤษ เพราะฟอนต์ default ของ matplotlib ไม่รองรับไทย
+    ax.bar(x - w / 2, base_vals, w, label="Baseline (original)", color="#F58518")    # ส้ม
+    ax.bar(x + w / 2, rout_vals, w, label="Baseline + Router", color="#4C78A8")      # น้ำเงิน
+    ax.set_ylabel("Accuracy (%)")
+    ax.set_title("MoXpert — Accuracy by Question Type (Baseline vs Baseline+Router)")
+    ax.set_xticks(x); ax.set_xticklabels(labels, rotation=20, ha="right")
+    ax.set_ylim(0, 105)
+    ax.legend(); ax.grid(axis="y", alpha=0.3)
+
+    # เขียนตัวเลขกำกับบนแท่ง
+    for i, v in enumerate(base_vals):
+        if not np.isnan(v):
+            ax.text(x[i] - w / 2, v + 0.5, f"{v:.1f}", ha="center", fontsize=8)
+    for i, v in enumerate(rout_vals):
+        if not np.isnan(v):
+            ax.text(x[i] + w / 2, v + 0.5, f"{v:.1f}", ha="center", fontsize=8)
+
+    fig.tight_layout()
+    out_png = Path(outdir) / "Accuracy_baseline_vs_router.png"
+    fig.savefig(out_png, dpi=120, bbox_inches="tight")
+    plt.close(fig)
+    logging.info(f"เซฟกราฟเทียบ accuracy {out_png}")
+
+
 def report_routing_agreement(rows) -> None:
     """พิมพ์สัดส่วนที่ router เลือก expert ตรงกับ heuristic (และจำนวนที่ route ต่าง)"""
     flagged = [r for r in rows if r.get("Routing Agree") in ("yes", "no")]
@@ -338,6 +401,14 @@ def evaluate(args):
     # เก็บ correct/total แยกตาม (mode, question_type)
     stats = {m: defaultdict(lambda: [0, 0]) for m in modes}
     rows = {m: [] for m in modes}
+
+    # --- บอกขนาด dataset ที่จะรัน (ก่อนเริ่ม) ---
+    total_images = len(data)
+    total_questions = sum(len(v.get("conversation", [])) for v in data.values())
+    planned = total_images if not args.limit else min(args.limit, total_images)
+    logging.info(f"dataset: DS-MVTec ทั้งหมด {total_images} รูป / {total_questions} คำถาม")
+    logging.info(f"จะรัน  : {planned} รูป "
+                 f"({'ทั้งหมด' if not args.limit else f'--limit {args.limit}'})")
 
     processed = 0
     for idx, (img_key, item) in enumerate(data.items()):
@@ -438,6 +509,14 @@ def evaluate(args):
 
     # --- สรุปตารางเทียบ accuracy ---
     print("\n" + "=" * 68)
+    # ระบุขนาด dataset ที่รันจริง (เทียบกับทั้งชุด)
+    n_q = max((len(rows[m]) for m in modes), default=0)
+    pct_img = processed / total_images * 100 if total_images else 0
+    print(f"DATASET: DS-MVTec — รันจริง {processed}/{total_images} รูป ({pct_img:.1f}% ของชุดข้อมูล)"
+          f" | {n_q} คำถาม/โหมด | โหมด: {', '.join(modes)}")
+    if args.limit:
+        print(f"         (จำกัดด้วย --limit {args.limit} ; ใช้ --limit 0 เพื่อรันทั้ง dataset)")
+    print("-" * 68)
     print(f"{'question_type':24s}  " + "  ".join(f"{m:>12s}" for m in modes))
     print("-" * 68)
     qtypes = sorted({t for m in modes for t in stats[m]})
@@ -462,6 +541,9 @@ def evaluate(args):
         report_metrics(rows[m], m)              # text
         save_confusion_png(rows[m], m, outdir)  # รูป PNG (count + percentage)
 
+    # --- กราฟแท่งเทียบ accuracy: baseline เดิม (ส้ม) vs baseline+router (น้ำเงิน) ---
+    save_accuracy_comparison_png(stats, modes, outdir)
+
 
 def analyze_csv(path: str) -> None:
     """โหมด --analyze-csv: อ่านผลที่รันไว้แล้วมาพิมพ์ accuracy + CM โดยไม่โหลดโมเดล
@@ -473,7 +555,9 @@ def analyze_csv(path: str) -> None:
     if not rows:
         print(f"[analyze-csv] ไม่มีข้อมูลใน {path}"); return
     mode = Path(path).stem.replace("Results_", "") or "csv"
-    print(f"[analyze-csv] อ่าน {len(rows)} แถวจาก {path}")
+    n_img = len({r.get("Image Path", "") for r in rows})   # จำนวนรูปที่ไม่ซ้ำใน CSV
+    print(f"[analyze-csv] อ่าน {path}")
+    print(f"DATASET: {n_img} รูป | {len(rows)} คำถาม | โหมด: {mode}")
     report_routing_agreement(rows)
     report_metrics(rows, mode)                          # text
     save_confusion_png(rows, mode, Path(path).parent)   # เซฟ PNG ข้างไฟล์ CSV
