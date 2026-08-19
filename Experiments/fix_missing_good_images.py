@@ -2,6 +2,15 @@
 image from MVTec-AD '{category}/test/good/*.png'. DefectSpectrum only published
 a subset of 'good' images since they need no defect mask, but the MMAD
 annotation file expects the full MVTec-AD test/good set."""
+
+
+'''
+เติมไฟล์รูปภาพที่ขาดหายไปใน DS-MVTec ที่อยู่ในโฟลเดอร์ .../image/good/*.png โดยคัดลอกไฟล์รูปภาพที่มีชื่อเดียวกันจากชุดข้อมูล MVTec-AD ที่อยู่ใน 
+{category}/test/good/*.png เนื่องจาก DefectSpectrum เผยแพร่รูปภาพประเภท good (ไม่มีตำหนิ) มาเพียงบางส่วนเท่านั้น เพราะรูปภาพเหล่านี้ 
+ไม่จำเป็นต้องมี Defect Mask แต่ไฟล์ MMAD annotation 
+กลับคาดหวังให้มีรูปภาพ good ครบทุกภาพเหมือนกับที่อยู่ในชุดข้อมูล MVTec-AD ภายใต้โฟลเดอร์ test/good
+'''
+
 import json
 import os
 import shutil
@@ -40,3 +49,5 @@ print(f"Copied from MVTec-AD: {copied}")
 print(f"Still missing (no source found): {len(unresolved)}")
 for k in unresolved[:20]:
     print("  -", k)
+
+

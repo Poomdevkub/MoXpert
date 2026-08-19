@@ -66,7 +66,7 @@ def find_all_descriptions(json_file_path, img_path):
             data = json.load(file)
 
         object_name = img_path.split('/')[1]
-
+        # "DS-MVTec/bottle/image/..." → "bottle"
         for _, sub_dict in data.items():
             if isinstance(sub_dict, dict) and object_name in sub_dict:
                 return {"object_name": object_name, "descriptions": sub_dict[object_name]}
